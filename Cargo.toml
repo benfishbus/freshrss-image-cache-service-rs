@@ -10,6 +10,7 @@ pedantic = { level = "warn", priority = -1 }
 [dependencies]
 anyhow = { version = "1", features = ["backtrace"] }
 axum = "0.7"
+curl = "0.4.49"
 futures-util = "0.3"
 hex = "0.4"
 reqwest = { version = "0.12", features = ["stream"] }
