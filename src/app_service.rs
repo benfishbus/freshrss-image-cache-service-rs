@@ -5,7 +5,7 @@ use anyhow::{bail, Context, Result};
 use sha3::{Digest, Sha3_256};
 use std::path::PathBuf;
 use axum::http::HeaderValue;
-use reqwest::Response;
+use curl::Response;
 use tokio::fs;
 use tokio::io::AsyncWriteExt;
 use url::Url;
@@ -157,7 +157,7 @@ impl AppService {
     }
 
     async fn try_get_image(&self, image_url: &Url, deploy_workarounds: bool) -> Result<(Response, HeaderValue)> {
-        let mut client_builder = reqwest::Client::builder()
+        let mut client_builder = curl::Client::builder()
             .danger_accept_invalid_certs(self.disable_https_validation);
 
         if deploy_workarounds {
@@ -171,7 +171,7 @@ impl AppService {
 
         let client = client_builder.build().expect("Failed to build the HTTP client");
 
-        let mut headers = reqwest::header::HeaderMap::new();
+        let mut headers = curl::header::HeaderMap::new();
         headers.insert("user-agent", "curl/7.86.0".parse().unwrap());
         headers.insert("accept", "*/*".parse().unwrap());
 
